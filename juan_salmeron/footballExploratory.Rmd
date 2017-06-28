@@ -139,6 +139,16 @@ players %>%
   ggplot(aes(year, nsample)) +
   geom_line(colour="darkorange") +
   theme_minimal()
+
+"
+SELECT CAST(SUBSTR(birthday, 1, 4) AS INT) AS year, COUNT(id) AS nsamples
+FROM Player
+GROUP BY year
+" %>%
+dbGetQuery(sql_con,.)  %>%
+  ggplot(aes(year, nsamples)) +
+  geom_line(colour="darkorange") +
+  theme_minimal()
 ```
 
 ```{r}
@@ -148,6 +158,17 @@ players %>%
   summarise(weight=mean(height), nsamples=n()) %>%
   filter(nsamples >= 200) %>%
   ggplot(aes(year, weight)) +
+  geom_line(colour="darkorange") +
+  theme_minimal()
+
+"
+SELECT CAST(SUBSTR(birthday, 1, 4) AS INT) AS year, AVG(height) AS height_average, COUNT(id) AS nsamples
+FROM Player
+GROUP BY year
+HAVING nsamples >= 200
+" %>%
+dbGetQuery(sql_con,.)  %>%
+  ggplot(aes(year, height_average)) +
   geom_line(colour="darkorange") +
   theme_minimal()
 ```
