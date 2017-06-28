@@ -79,6 +79,12 @@ players %>%
 players %>%
   mutate(weight_kg = weight*0.45359237) %>%
   summarise(weight=mean(weight_kg), height=mean(height))
+
+"
+SELECT AVG(height), AVG(weight*0.45359237)
+FROM Player
+" %>%
+dbGetQuery(sql_con,.)
 ```
 
 ## GROUP BY
