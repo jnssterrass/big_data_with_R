@@ -331,7 +331,28 @@ dbGetQuery(sc, .)
 
 ## Exercises
 * Could modify the query and add product name?
+```{r}
+"
+SELECT pn.product_id, products_tbl.product_name
+,   AVG(products_number) AS avg_products_number
+FROM (
+    SELECT order_id
+    ,   product_id
+    ,   COUNT(product_id)  OVER(partition by order_id) AS products_number
+    FROM order_products__train_tbl
+) pn, products_tbl
+WHERE pn.product_id = products_tbl.product_id
+GROUP BY pn.product_id, products_tbl.product_name
+ORDER BY avg_products_number DESC
+LIMIT 10
+" %>%
+dbGetQuery(sc, .)
+```
 
 * Product that is usually orders in small baskets.
+```{r}
+```
 
 * For 10 first users and all their orders find days since first order.
+```{r}
+```
