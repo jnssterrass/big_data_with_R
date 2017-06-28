@@ -284,6 +284,7 @@ product_times_ordered_txt %>%
 
 
 
+
 ```{r}
 dbGetQuery(sc, 
 "
@@ -311,4 +312,21 @@ FROM orders_tbl
 WHERE user_id <= 10 
 ")
 ```
+* Product that is usually orders in numerous baskets
 
+```{r}
+"
+SELECT product_id
+,   AVG(products_number) AS avg_products_number
+FROM (
+    SELECT order_id
+    ,   product_id
+    ,   COUNT(product_id)  OVER(partition by order_id) AS products_number
+    FROM order_products__train_tbl
+) pn
+GROUP BY product_id
+ORDER BY avg_products_number DESC
+LIMIT 100
+" %>%
+dbGetQuery(sc, .)
+```
