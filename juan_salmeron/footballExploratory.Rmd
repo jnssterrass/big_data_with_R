@@ -56,6 +56,14 @@ LIMIT 6
 players %>%
   filter(birthday >= "1998") %>%
   head
+
+"
+SELECT *
+FROM Player
+WHERE birthday >= '1998'
+LIMIT 6
+" %>%
+dbGetQuery(sql_con,.)
 ```
 
 ## ORDER ~ arrange
