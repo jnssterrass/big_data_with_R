@@ -72,6 +72,14 @@ dbGetQuery(sql_con,.)
 players %>%
   arrange(birthday) %>%
   head
+
+"
+SELECT *
+FROM Player
+ORDER BY birthday ASC
+LIMIT 6
+" %>%
+dbGetQuery(sql_con,.)
 ```
 
 ## aggregators ~ summarise
@@ -79,6 +87,13 @@ players %>%
 ```{r}
 players %>%
   summarise(weight=mean(weight), height=mean(height))
+
+"
+SELECT AVG(weight), AVG(height)
+FROM Player
+LIMIT 6
+" %>%
+dbGetQuery(sql_con,.)
 ```
 
 ## mutate
@@ -103,6 +118,16 @@ players %>%
   group_by(year) %>%
   summarise(weight=mean(height)) %>%
   ggplot(aes(year, weight)) +
+  geom_line(colour="darkorange") +
+  theme_minimal()
+
+"
+SELECT CAST(SUBSTR(birthday, 1, 4) AS INT) AS year, AVG(height) AS height_average
+FROM Player
+GROUP BY year
+" %>%
+dbGetQuery(sql_con,.)  %>%
+  ggplot(aes(year, height_average)) +
   geom_line(colour="darkorange") +
   theme_minimal()
 ```
