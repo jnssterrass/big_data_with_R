@@ -328,3 +328,10 @@ LIMIT 100
 " %>%
 dbGetQuery(sc, .)
 ```
+
+## Exercises
+* Could modify the query and add product name?
+
+* Product that is usually orders in small baskets.
+
+* For 10 first users and all their orders find days since first order.
