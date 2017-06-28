@@ -283,8 +283,6 @@ product_times_ordered_txt %>%
 ## More on orders (Window Functions)
 
 
-
-
 ```{r}
 dbGetQuery(sc, 
 "
@@ -307,7 +305,7 @@ WHERE user_id <= 10
 dbGetQuery(sc, 
 "SELECT user_id
 ,   order_id
-,   FIRST_VALUE(order_id)  OVER(partition by user_id ORDER BY order_number) AS first_order
+,   FIRST_VALUE(order_id)  OVER(PARTITION BY user_id ORDER BY order_number) AS first_order
 FROM orders_tbl
 WHERE user_id <= 10 
 ")
